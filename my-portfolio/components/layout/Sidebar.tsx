@@ -1,51 +1,123 @@
+"use client";
+
 import Link from "next/link";
-import { Facebook, Github, Linkedin, Twitter } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { useState, useEffect } from "react";
+import { Github, Linkedin, Twitter, GraduationCap, Menu, X } from "lucide-react";
 import SocialLinks from "../ui/SocialLinks";
 
 const NAV = [
-  { href: "#about", label: "ABOUT ME" },
+  { href: "/", label: "HOME" },
+  { href: "/about", label: "ABOUT ME" },
   { href: "#projects", label: "PROJECTS" },
-  { href: "#publications", label: "PUBLICATIONS" }
+  { href: "/publication", label: "PUBLICATIONS" },
 ];
 
-export default function Sidebar() {
-  return (
-    <aside className="bg-black/90 min-h-svh md:min-h-dvh md:sticky md:top-0 px-6 py-8 md:py-10">
-      <div className="mx-auto w-full max-w-[260px] min-h-full grid grid-rows-[1fr_auto] justify-items-center">
-        
-        {/* NAV center */ }
-        <nav className="self-center flex flex-col items-center gap-5 md:gap-6 text-[11px] md:text-xs tracking-[0.2em] leading-6 text-center">
-          {NAV.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="text-gray-200/80 hover:text-yellow-400 transition-colors"
-            >
-              {item.label}
-            </Link>
-          ))}
-          <Link
-            href="#contact"
-            className="mt-2 text-yellow-400 hover:opacity-90"
-          >
-            &lt; CONTACT /&gt;
-          </Link>
-        </nav>
+function normalize(path: string) {
+  if (!path) return "/";
+  return path !== "/" && path.endsWith("/") ? path.slice(0, -1) : path;
+}
 
-        {/* Social */}
-        <div className="self-end w-full pb-[env(safe-area-inset-bottom)]">
-          <div className="mt-6 flex justify-center">
-            <SocialLinks
-              items={[
-                { href: "#", label: "Facebook", icon: Facebook },
-                { href: "#", label: "Twitter", icon: Twitter },
-                { href: "#", label: "Github", icon: Github },
-                { href: "#", label: "LinkedIn", icon: Linkedin },
-              ]}
-            />
+export default function Sidebar() {
+  const pathname = normalize(usePathname() || "/");
+  const [open, setOpen] = useState(false);
+
+  // Close the mobile menu on route change
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
+
+  const isActive = (href: string) => {
+    if (href.startsWith("#")) return false;
+    const target = normalize(href);
+    if (target === "/") return pathname === "/";
+    return pathname === target || pathname.startsWith(`${target}/`);
+  };
+
+  const NavLinks = ({ onClick }: { onClick?: () => void }) => (
+    <nav className="flex flex-col items-center gap-5 md:gap-6 text-[11px] md:text-xs tracking-[0.2em] leading-6 text-center">
+      {NAV.map((item) => {
+        const active = isActive(item.href);
+        return (
+          <Link
+            key={item.href}
+            href={item.href}
+            aria-current={active ? "page" : undefined}
+            onClick={onClick}
+            className={`transition-colors ${
+              active
+                ? "text-yellow-400 font-semibold"
+                : "text-gray-200/80 hover:text-yellow-400"
+            }`}
+          >
+            {item.label}
+          </Link>
+        );
+      })}
+    </nav>
+  );
+
+  return (
+    <>
+      {/* MOBILE TOP BAR (fixed) */}
+      <div className="md:hidden fixed inset-x-0 top-0 z-50 bg-black/90 border-b border-white/10 backdrop-blur supports-[backdrop-filter]:bg-black/70">
+        <div className="mx-auto max-w-6xl px-4 py-1 flex items-center justify-between">
+          <span className="text-[11px] tracking-[0.25em] text-gray-200/90">FABRIZIO FAGIOLO</span>
+          <button
+            aria-label={open ? "Close menu" : "Open menu"}
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+            onClick={() => setOpen((s) => !s)}
+            className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-white/10 hover:border-yellow-400/80 transition"
+          >
+            {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+          </button>
+        </div>
+        {/* Slide-down panel */}
+        <div
+          id="mobile-menu"
+          className={`${
+            open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+          } grid transition-[grid-template-rows] duration-300 ease-out`}
+        >
+          <div className="overflow-hidden">
+            <div className="px-6 pb-4">
+              <NavLinks onClick={() => setOpen(false)} />
+              <div className="mt-4 flex justify-center">
+                <SocialLinks
+                  items={[
+                    { href: "https://scholar.google.com/citations?user=5etji7kAAAAJ&hl=en", label: "Google Scholar", icon: GraduationCap },
+                    { href: "#", label: "Twitter", icon: Twitter },
+                    { href: "https://github.com/F-a-b-r-i-z-i-o", label: "Github", icon: Github },
+                    { href: "https://www.linkedin.com/in/fabrizio-fagiolo-49905a182/", label: "LinkedIn", icon: Linkedin },
+                  ]}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </aside>
+
+      {/* DESKTOP SIDEBAR (sticky) */}
+      <aside className="hidden md:block bg-black/90 min-h-dvh md:sticky md:top-0 px-6 py-10">
+        <div className="mx-auto w-full max-w-[260px] min-h-full grid grid-rows-[1fr_auto] justify-items-center">
+          <div className="self-center">
+            <NavLinks />
+          </div>
+          <div className="self-end w-full">
+            <div className="mt-6 flex justify-center">
+              <SocialLinks
+                items={[
+                  { href: "https://scholar.google.com/citations?user=5etji7kAAAAJ&hl=en", label: "Google Scholar", icon: GraduationCap },
+                  { href: "#", label: "Twitter", icon: Twitter },
+                  { href: "https://github.com/F-a-b-r-i-z-i-o", label: "Github", icon: Github },
+                  { href: "https://www.linkedin.com/in/fabrizio-fagiolo-49905a182/", label: "LinkedIn", icon: Linkedin },
+                ]}
+              />
+            </div>
+          </div>
+        </div>
+      </aside>
+    </>
   );
 }

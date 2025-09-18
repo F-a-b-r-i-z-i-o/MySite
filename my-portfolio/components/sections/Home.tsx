@@ -10,7 +10,7 @@ export default function Home() {
           Fabrizio Fagiolo
         </h1>
         <p className="mt-3 text-sm md:text-base text-gray-300/80">
-          I’m a research fellow at University of Perugia
+          I’m a PhD student at University for Foreigners of Perugia
         </p>
       </div>
       <div
