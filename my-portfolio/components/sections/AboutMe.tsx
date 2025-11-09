@@ -104,29 +104,35 @@ const STACK: StackItem[] = [
   { label: "Qiskit",     svg: QiskitSVG }, 
 ];
 
+
 export default function AboutPage() {
   return (
     <section id="about" className="bg-neutral-900 text-neutral-100">
       <section className="mx-auto w-full max-w-6xl px-6 md:px-10 lg:px-12 py-12 md:py-16 lg:py-20">
         {/* Header */}
         <header className="text-center">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-wide font-[system-ui]">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight">
             ABOUT ME
           </h1>
           <p className="mx-auto mt-4 max-w-3xl text-sm md:text-base leading-relaxed text-neutral-300">
-            I am a PhD student specializing in <span className="font-semibold">Combinatorial Optimization </span> 
-            and <span className="font-semibold">Quantum Computing</span>, with a focus on developing 
-            <span className="font-semibold"> Variational Quantum Algorithms (VQAs)</span> or <span className="font-semibold">  Metaheuristics </span>for combinatorial optimization problem. 
+            I am a PhD Student specializing in <span className="font-semibold">Combinatorial Optimization</span> 
+            and <span className="font-semibold">Quantum Computing</span>, with a focus on developing
+            <span className="font-semibold"> Quantum Algorithms </span> or <span className="font-semibold">Metaheuristics</span> for combinatorial optimization problems.
           </p>
         </header>
 
-        {/* Body: two columns */}
-        <div className="mt-10 md:mt-14 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+        <div
+          className="
+            mt-10 md:mt-14
+            grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12
+            items-start
+          "
+        >
           {/* Image card */}
-          <div className="mx-auto w-full max-w-md lg:max-w-none">
-            <div className="relative overflow-hidden rounded-2xl">
+          <div className="lg:col-span-5 mx-auto w-full max-w-md lg:max-w-none">
+            <div className="relative overflow-hidden rounded-2xl ring-1 ring-neutral-800 shadow-[0_12px_40px_rgba(0,0,0,.35)]">
               <Image
-                src={cvPhoto}            
+                src={cvPhoto}
                 alt="Portrait"
                 width={640}
                 height={800}
@@ -136,63 +142,88 @@ export default function AboutPage() {
             </div>
           </div>
 
-          <div className="mx-auto w-full max-w-xl lg:max-w-2xl">
-            <h2 className="text-yellow-400 text-2xl md:text-3xl font-extrabold tracking-wide">
+          <div
+            className="
+              lg:col-span-7
+              lg:min-h-[420px]               
+              lg:flex lg:flex-col lg:justify-center  
+              mx-auto w-full max-w-xl lg:max-w-2xl
+            "
+          >
+            <div className="rounded-2xl bg-neutral-900/60 ring-1 ring-neutral-800 p-6 md:p-7">
+              <h2 className="text-yellow-400 text-2xl md:text-3xl font-extrabold tracking-tight">
                 Fabrizio Fagiolo
-            </h2>
-            <p className="mt-2 text-sm md:text-base font-semibold tracking-widest">
-              PhD Student
-            </p>
-
-            <div className="mt-5 space-y-4 text-sm md:text-base leading-relaxed text-neutral-300">
-              <p>
-                Alongside my research, I have hands-on experience as a <span className="font-semibold">Full-Stack Developer</span> 
-                and <span className="font-semibold">Software Engineer</span>, working with technologies such as Python/Django, FastAPI, Next.js, and React  
-                combining rigorous academic work with practical software development skills.
+              </h2>
+              <p className="mt-1 text-sm md:text-base font-semibold tracking-wide text-neutral-300">
+                PhD Student
               </p>
-            </div>
 
-            {/* CTA buttons */}
-            <div className="mt-7 flex flex-wrap gap-4">
-              <a
-                href="/cv/Fabrizio_Fagiolo_CV_Jul2025.pdf"
-                download="Fabrizio_Fagiolo_CV_Jul2025.pdf"
-                className="inline-flex items-center gap-2 rounded-lg bg-yellow-400 px-6 py-3 text-black font-semibold hover:opacity-90 transition"
-              >
-                Download CV
-              </a>
-              <Link
-                href="https://www.linkedin.com/in/fabrizio-fagiolo-49905a182/"
-                className="inline-flex items-center justify-center rounded-lg border border-yellow-400 px-6 py-3 text-yellow-400 font-semibold hover:bg-yellow-400/10 transition"
-              >
-                Hire Me
-              </Link>
+              <p className="mt-4 text-sm md:text-base leading-relaxed text-neutral-300">
+              While studying, I worked as a Full-Stack Developer and Software Engineer (Python/Django, Next.js, Angular/Ionic) in industry. 
+              Academically, I focus on performance and algorithms, employing C/C++ to speed up metaheuristics and Python for quantum programming.
+              </p>
+
+              {/* Buttons */}
+              <div className="mt-6 flex flex-wrap gap-3 justify-center">
+                <a
+                  href="/cv/Fabrizio_Fagiolo_CV_Jul2025.pdf"
+                  download="Fabrizio_Fagiolo_CV_Jul2025.pdf"
+                  className="inline-flex items-center gap-2 rounded-lg bg-yellow-400 px-5 py-2.5 text-black font-semibold hover:brightness-95 transition"
+                >
+                  Download CV
+                </a>
+                <Link
+                  href="https://www.linkedin.com/in/fabrizio-fagiolo-49905a182/"
+                  className="inline-flex items-center justify-center rounded-lg border border-yellow-400/80 px-5 py-2.5 text-yellow-400 font-semibold hover:bg-yellow-400/10 transition"
+                >
+                  Hire Me
+                </Link>
+              </div>
             </div>
           </div>
         </div>
 
-       
-     
-      {/* My Stack */}
-      <section className="mt-12 md:mt-16 lg:mt-20">
-        <h3 className="text-center text-xl md:text-2xl font-extrabold tracking-wide text-yellow-400">
-          My Stack
-        </h3>
-        <div className="mt-6 flex flex-wrap items-center justify-center gap-6 md:gap-8">
-          {STACK.map((item) => (
-            <div key={item.label} className="flex flex-col items-center gap-2">
-              <div className="grid h-10 w-10 md:h-12 md:w-12 place-items-center">
-                {item.src ? (
-                  <Image src={item.src} alt={item.label} width={48} height={48} className="h-10 w-10 md:h-12 md:w-12" />
-                ) : (
-                  <div aria-hidden className="text-current h-10 w-10 md:h-12 md:w-12">{item.svg}</div>
-                )}
-              </div>
-              <span className="text-[11px] md:text-xs text-neutral-400 tracking-wide text-center">{item.label}</span>
+        {/* My Stack */}
+        <section className="mt-12 md:mt-16 lg:mt-20">
+          <h3 className="text-center text-xl md:text-2xl font-extrabold tracking-tight text-yellow-400">
+            My Stack
+          </h3>
+
+          <div className="mt-6 rounded-2xl bg-neutral-900/60 ring-1 ring-neutral-800 p-5 md:p-6">
+            <div className="flex flex-wrap items-center justify-center gap-6 md:gap-8">
+              {STACK.map((item) => (
+                <div
+                  key={item.label}
+                  className="flex flex-col items-center gap-2"
+                >
+                  <div
+                    className="
+                      grid h-12 w-12 md:h-14 md:w-14 place-items-center
+                      rounded-xl bg-neutral-800/60 ring-1 ring-neutral-700
+                      transition hover:translate-y-[-2px] hover:ring-yellow-400/60
+                    "
+                    aria-hidden
+                  >
+                    {item.src ? (
+                      <Image
+                        src={item.src}
+                        alt={item.label}
+                        width={56}
+                        height={56}
+                        className="h-12 w-12 md:h-14 md:w-14 object-contain"
+                      />
+                    ) : (
+                      <div className="text-neutral-200">{item.svg}</div>
+                    )}
+                  </div>
+                  <span className="text-[11px] md:text-xs text-neutral-400 tracking-wide text-center">
+                    {item.label}
+                  </span>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-      </section>
+          </div>
+        </section>
       </section>
     </section>
   );

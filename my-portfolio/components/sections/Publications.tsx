@@ -58,12 +58,11 @@ const PUBS: Pub[] = [
 function PubCard({ p }: { p: Pub }) {
   return (
     <article className="group rounded-xl bg-neutral-900/80 ring-1 ring-neutral-800 shadow-[0_0_0_1px_rgba(0,0,0,.2)] p-5 md:p-6 hover:ring-yellow-500/40 transition">
-      {/* Title */}
+      
       <h4 className="text-base md:text-lg font-bold text-neutral-100 group-hover:text-yellow-100/90 transition-colors">
         {p.title}
       </h4>
 
-      {/* Meta */}
       <div className="mt-2 text-xs md:text-sm text-neutral-400">
         <span className="font-semibold text-neutral-300">{p.authors}</span>
         <span className="mx-2">•</span>
@@ -77,12 +76,10 @@ function PubCard({ p }: { p: Pub }) {
         )}
       </div>
 
-      {/* Summary */}
       <p className="mt-3 text-sm md:text-base leading-relaxed text-neutral-300">
         {p.summary}
       </p>
 
-      {/* Actions */}
       <div className="mt-4 flex flex-wrap gap-3">
         {p.pdf && (
           <a
@@ -90,7 +87,6 @@ function PubCard({ p }: { p: Pub }) {
             download
             className="inline-flex items-center gap-2 rounded-md bg-yellow-400 px-3 py-2 text-black text-sm font-semibold hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-yellow-500/60 focus:ring-offset-0 transition"
           >
-            {/* Simple file icon */}
             <svg aria-hidden="true" viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6" fill="none" stroke="currentColor" strokeWidth="2"/></svg>
             PDF
           </a>
@@ -101,7 +97,6 @@ function PubCard({ p }: { p: Pub }) {
             target="_blank"
             className="inline-flex items-center gap-2 rounded-md border border-yellow-500/60 px-3 py-2 text-yellow-400 text-xs md:text-sm font-semibold hover:border-yellow-400 hover:text-yellow-300 focus:outline-none focus:ring-2 focus:ring-yellow-500/60 focus:ring-offset-0 transition"
           >
-            {/* External link icon */}
             <svg aria-hidden="true" viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor"><path d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3z"/><path d="M5 5h7v2H7v10h10v-5h2v7H5z"/></svg>
             DOI
           </Link>
@@ -112,7 +107,6 @@ function PubCard({ p }: { p: Pub }) {
             target="_blank"
             className="inline-flex items-center gap-2 rounded-md border border-neutral-700 px-3 py-2 text-neutral-200 text-xs md:text-sm hover:border-neutral-500 hover:text-neutral-50 focus:outline-none focus:ring-2 focus:ring-neutral-600/50 focus:ring-offset-0 transition"
           >
-            {/* Code icon */}
             <svg aria-hidden="true" viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor"><path d="M8.59 16.59 4 12l4.59-4.59L10 8.83 6.83 12 10 15.17zM15.41 7.41 20 12l-4.59 4.59L14 15.17 17.17 12 14 8.83z"/></svg>
             Code
           </Link>
@@ -126,7 +120,6 @@ export default function PublicationsPage() {
   return (
     <section className="bg-neutral-950 text-neutral-100 min-h-svh">
       <div className="mx-auto w-full max-w-6xl px-6 md:px-10 lg:px-12 py-12 md:py-16 lg:py-20">
-        {/* Header */}
         <header className="text-center">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-wide">
             PUBLICATIONS
