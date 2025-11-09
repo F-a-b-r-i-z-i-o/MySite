@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState, useEffect } from "react";
-import { Github, Linkedin, GraduationCap, Menu, X } from "lucide-react";
+import { useState, useEffect, forwardRef } from "react";
+import { Github, Linkedin, GraduationCap, Menu, X, LucideProps } from "lucide-react";
 import SocialLinks from "../ui/SocialLinks";
 
 const NAV = [
@@ -19,34 +19,33 @@ function normalize(path: string) {
 }
 
 // More visible ResearchGate icon
-const ResearchGateIcon = ({
-  className = "",
-  ...props
-}: React.SVGProps<SVGSVGElement>) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 24 24"
-    aria-hidden="true"
-    {...props}
-    className={`h-5 w-5 ${className}`} // slightly bigger than default lucide 16px
-  >
-    {/* Circle background uses currentColor so it matches your link color */}
-    <circle cx="12" cy="12" r="10" fill="currentColor" />
-    {/* "RG" in black for strong contrast */}
-    <text
-      x="12"
-      y="13.5"
-      textAnchor="middle"
-      dominantBaseline="middle"
-      fontSize="8"
-      fontWeight="700"
-      fill="#000000"
-      fontFamily="system-ui, -apple-system, BlinkMacSystemFont, sans-serif"
+const ResearchGateIcon = forwardRef<SVGSVGElement, LucideProps>(
+  ({ className, ...props }, ref) => (
+    <svg
+      ref={ref}
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      {...props}
+      className={`h-5 w-5 ${className ?? ""}`}
     >
-      RG
-    </text>
-  </svg>
+      <circle cx="12" cy="12" r="10" fill="currentColor" />
+      <text
+        x="12"
+        y="13.5"
+        textAnchor="middle"
+        dominantBaseline="middle"
+        fontSize="8"
+        fontWeight="700"
+        fill="#000000"
+        fontFamily="system-ui, -apple-system, BlinkMacSystemFont, sans-serif"
+      >
+        RG
+      </text>
+    </svg>
+  )
 );
+
+ResearchGateIcon.displayName = "ResearchGateIcon";
 
 export default function Sidebar() {
   const pathname = normalize(usePathname() || "/");
