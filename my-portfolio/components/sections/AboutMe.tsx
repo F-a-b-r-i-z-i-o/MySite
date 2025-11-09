@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import cvPhoto from '../../public/photo/cv_foto.jpg';
+import cvPhoto from '../../public/photo/Cv_foto.jpg';
 
 import { 
   SiC, 
