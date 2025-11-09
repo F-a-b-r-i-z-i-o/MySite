@@ -2,7 +2,7 @@ name: Deploy Next.js to GitHub Pages
 
 on:
   push:
-    branches: ["main"]
+    branches: ["develop"]
   workflow_dispatch:
 
 permissions:
@@ -38,7 +38,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./out
+          path: ./out/MySite
 
   deploy:
     runs-on: ubuntu-latest
