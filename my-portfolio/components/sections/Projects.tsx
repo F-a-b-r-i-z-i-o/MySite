@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 const GITHUB_USER = "F-a-b-r-i-z-i-o";
-const AVATAR_URL = "/photo/Avatar.png";
+const AVATAR_URL = "../../public/photo/Avatar.png";
 
 type Repo = {
   id: number;
