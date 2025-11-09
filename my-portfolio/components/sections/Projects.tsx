@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 const GITHUB_USER = "F-a-b-r-i-z-i-o";
-const AVATAR_URL = "/photo/avatar.png";
+const FALLBACK_AVATAR_URL = `https://github.com/${GITHUB_USER}.png`;
 
 type Repo = {
   id: number;
@@ -69,7 +69,8 @@ const PROJECTS_CONFIG: ProjectConfig[] = [
     id: 6,
     owner: GITHUB_USER,
     repo: "VQE-PFSP",
-    description: "Variational Quantum Algorithm for Permutation Flow Shop Scheduling",
+    description:
+      "Variational Quantum Algorithm for Permutation Flow Shop Scheduling",
     fallbackStars: 1,
     fallbackLanguage: "Python",
   },
@@ -83,8 +84,8 @@ async function fetchRepo(project: ProjectConfig): Promise<Repo> {
       next: { revalidate: 3600 },
       headers: {
         Accept: "application/vnd.github+json",
-        ...(process.env.GITHUB_TOKEN
-          ? { Authorization: `Bearer ${process.env.GITHUB_TOKEN}` }
+        ...(process.env.GITHUB_TOKEN_FOR_API
+          ? { Authorization: `Bearer ${process.env.GITHUB_TOKEN_FOR_API}` }
           : {}),
       },
     });
@@ -95,10 +96,18 @@ async function fetchRepo(project: ProjectConfig): Promise<Repo> {
 
     const data = await res.json();
 
+    const ownerLogin = data.owner?.login ?? project.owner;
+    const avatarUrl =
+      typeof data.owner?.avatar_url === "string"
+        ? data.owner.avatar_url
+        : FALLBACK_AVATAR_URL;
+
     return {
       id: data.id ?? project.id,
       name: data.name ?? project.repo,
-      html_url: data.html_url ?? `https://github.com/${project.owner}/${project.repo}`,
+      html_url:
+        data.html_url ??
+        `https://github.com/${project.owner}/${project.repo}`,
       description: project.description ?? data.description ?? null,
       stargazers_count:
         typeof data.stargazers_count === "number"
@@ -106,12 +115,12 @@ async function fetchRepo(project: ProjectConfig): Promise<Repo> {
           : project.fallbackStars ?? 0,
       language: data.language ?? project.fallbackLanguage ?? null,
       owner: {
-        avatar_url: AVATAR_URL,
-        login: GITHUB_USER,
+        avatar_url: avatarUrl,
+        login: ownerLogin,
       },
     };
   } catch {
-    // Fallback if API fails 
+    // fallback static se l'API fallisce (rate limit ecc.)
     return {
       id: project.id,
       name: project.repo,
@@ -120,8 +129,8 @@ async function fetchRepo(project: ProjectConfig): Promise<Repo> {
       stargazers_count: project.fallbackStars ?? 0,
       language: project.fallbackLanguage ?? null,
       owner: {
-        avatar_url: AVATAR_URL,
-        login: GITHUB_USER,
+        avatar_url: FALLBACK_AVATAR_URL,
+        login: project.owner,
       },
     };
   }
@@ -145,8 +154,8 @@ function ProjectCard({ repo }: { repo: Repo }) {
       <div className="flex items-start gap-3">
         <div className="shrink-0">
           <Image
-            alt={`${GITHUB_USER} avatar`}
-            src={AVATAR_URL}
+            alt={`${repo.owner.login} avatar`}
+            src={repo.owner.avatar_url}
             width={48}
             height={48}
             sizes="(min-width: 768px) 48px, 40px"
@@ -158,7 +167,9 @@ function ProjectCard({ repo }: { repo: Repo }) {
           <h3 className="text-base md:text-lg font-semibold tracking-tight text-neutral-100 truncate">
             {repo.name}
           </h3>
-          <p className="text-[11px] md:text-xs text-neutral-400">{repo.owner.login}</p>
+          <p className="text-[11px] md:text-xs text-neutral-400">
+            {repo.owner.login}
+          </p>
         </div>
       </div>
 
