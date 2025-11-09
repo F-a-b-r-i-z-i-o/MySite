@@ -25,12 +25,12 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
+          cache: "npm"
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Build (static export)
+      - name: Build Next.js (static export)
         env:
           GITHUB_TOKEN_FOR_API: ${{ secrets.GITHUB_TOKEN_FOR_API }}
         run: npm run build
