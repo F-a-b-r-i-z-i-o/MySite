@@ -2,7 +2,7 @@ name: Deploy Next.js to GitHub Pages
 
 on:
   push:
-    branches: ["develop"]        
+    branches: ["develop"]    
   workflow_dispatch:
 
 permissions:
@@ -37,10 +37,14 @@ jobs:
           GITHUB_TOKEN_FOR_API: ${{ secrets.GITHUB_TOKEN_FOR_API }}
         run: npm run build
 
+      - name: List output (debug)
+        working-directory: ./my-portfolio
+        run: ls -R
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./MySite/my-portfolio/out
+          path: ./my-portfolio/out
 
   deploy:
     runs-on: ubuntu-latest
